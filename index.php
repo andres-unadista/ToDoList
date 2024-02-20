@@ -22,6 +22,10 @@ include('add_task.php');
       font-size: 1.1em;
       font-weight: 500;
     }
+
+    .remark {
+      text-decoration: line-through;
+    }
   </style>
 </head>
 
@@ -61,9 +65,12 @@ include('add_task.php');
             <li class="list-group-item">
               <div class="row ps-5">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="" />
-                  <label class="form-check-label" for=""> <?php echo $task['description']; ?> </label>
-                  <span class="badge bg-danger float-end">X</span>
+                  <form action="" method="post">
+                    <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
+                    <input class="form-check-input" type="checkbox" value="<?php echo $task['completed']; ?>" name="completed" onchange="this.form.submit();" />
+                    <label class="form-check-label <?php echo $task['completed'] ? 'remark' : '' ?>"> <?php echo $task['description']; ?> </label>
+                  </form>
+                  <a href="/?id=<?php echo $task['id']; ?>"><span class="badge bg-danger float-end">X</span></a>
                 </div>
               </div>
             </li>
