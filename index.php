@@ -48,7 +48,7 @@ include('add_task.php');
               </div>
               <div class="mb-3">
                 <div class="d-grid gap-2">
-                  <button type="button" name="btn_save" id="btn_save" class="btn btn-primary">
+                  <button name="btn_save" id="btn_save" class="btn btn-primary">
                     Guardar
                   </button>
                 </div>
@@ -65,11 +65,12 @@ include('add_task.php');
             <li class="list-group-item">
               <div class="row ps-5">
                 <div class="form-check">
-                  <form action="" method="post">
-                    <input type="hidden" name="id" value="<?php echo $task['id']; ?>">
-                    <input class="form-check-input" type="checkbox" value="<?php echo $task['completed']; ?>" name="completed" onchange="this.form.submit();" />
-                    <label class="form-check-label <?php echo $task['completed'] ? 'remark' : '' ?>"> <?php echo $task['description']; ?> </label>
+                  <form class="m-0" action="/" method="post">
+                    <input type="hidden" name="id_completed" value="<?php echo $task['id']; ?>">
+                    <input type="hidden" name="completed" value="<?php echo $task['completed']; ?>">
+                    <input class="form-check-input" type="checkbox" name="checked" onchange="this.form.submit();" <?php echo $task['completed'] === 1 ? 'checked' : '' ?> />
                   </form>
+                  <label class="form-check-label <?php echo $task['completed'] === 1 ? 'remark' : '' ?>"> <?php echo $task['description']; ?> </label>
                   <a href="/?id=<?php echo $task['id']; ?>"><span class="badge bg-danger float-end">X</span></a>
                 </div>
               </div>

@@ -1,9 +1,8 @@
 <?php
+$tasks = [];
 
 try {
   $conn = new PDO('mysql:host=localhost;dbname=db_todolist', 'root', '');
-  echo 'Conectado';
-
 
   // insert task
   if (isset($_POST['btn_save'])) {
@@ -16,12 +15,11 @@ try {
   }
 
   // update task
-  if (isset($_POST['completed'])) {
+  if (isset($_POST['id_completed'])) {
     updateTask($conn);
   }
 
   // get all tasks
-  $tasks = [];
   getTasks($conn);
 } catch (PDOException $e) {
   echo 'Error de conexión: ' . $e->getMessage();
@@ -36,7 +34,7 @@ function getTasks($conn)
 function insertTask($conn)
 {
   $task = $_POST['task'];
-  $query = "INSERT INTO tasks (task) VALUES (:task)";
+  $query = "INSERT INTO tasks (description) VALUES (:task)";
   $stmt = $conn->prepare($query);
   $stmt->bindParam(':task', $task);
   $stmt->execute();
@@ -49,12 +47,13 @@ function deleteTask($conn)
   $stmt = $conn->prepare($query);
   $stmt->bindParam(':id', $id);
   $stmt->execute();
+  header('Location: /');
 }
 
 function updateTask($conn)
 {
-  $id = $_POST['id'];
-  $completed = $_POST['completed'] === 1 ? 0 : 1;
+  $id = $_POST['id_completed'];
+  $completed = intval($_POST['completed']) === 1 ? 0 : 1;
   $query = "UPDATE tasks SET completed = :completed WHERE id = :id";
   $stmt = $conn->prepare($query);
   $stmt->bindParam(':completed', $completed);
